@@ -152,19 +152,49 @@
   background-size: 24px 24px;
 }
 
-.node-ring {
-  transition:
-    r 180ms ease,
-    fill 180ms ease,
-    stroke 180ms ease;
+@keyframes log-line-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.graph-grid g:hover .node-ring {
-  stroke: #00e5ff;
-  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.45));
+.log-line {
+  animation: log-line-in 220ms ease-out both;
 }
 
-::selection {
-  background: rgba(0, 229, 255, 0.24);
-  color: #f1f5f9;
+@keyframes drawer-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
+
+.node-drawer {
+  animation: drawer-in 200ms ease-out both;
+}
+
+@keyframes answer-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.answer-card {
+  animation: answer-in 260ms ease-out both;
+  box-shadow: 0 0 34px rgba(0, 229, 255, 0.07);
+}
+

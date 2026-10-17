@@ -12,10 +12,14 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 3000,
-    allowedHosts: ['agent-orchestra-35.cluster-16.preview.emergentcf.cloud'],
+    allowedHosts: [
+      '.preview.emergentagent.com',
+      '.preview.emergentcf.cloud',
+      'localhost',
+      '127.0.0.1',
+    ],
     proxy: {
       '/api': 'http://localhost:8001',
     },
   },
 });
-
