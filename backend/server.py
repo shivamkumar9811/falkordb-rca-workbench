@@ -10,6 +10,7 @@ from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
 
 from lib.falkor import GraphStore
+from routers.agents import router as agents_router
 from routers.graph import router as graph_router
 
 
@@ -54,6 +55,7 @@ app = FastAPI(lifespan=lifespan)
 
 api_router = APIRouter(prefix="/api")
 api_router.include_router(graph_router)
+api_router.include_router(agents_router)
 
 app.add_middleware(
     CORSMiddleware,

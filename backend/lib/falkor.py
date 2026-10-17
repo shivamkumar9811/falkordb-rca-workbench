@@ -8,7 +8,7 @@ import os
 import time
 from collections.abc import Mapping
 from datetime import datetime
-from pathlib import Path
+from pathlib import Path as FilePath
 from typing import Any
 
 from dotenv import load_dotenv
@@ -18,7 +18,7 @@ from falkordb.node import Node
 from falkordb.path import Path
 
 
-load_dotenv(Path(__file__).parent.parent / ".env")
+load_dotenv(FilePath(__file__).parent.parent / ".env")
 
 logger = logging.getLogger(__name__)
 
@@ -371,3 +371,4 @@ class GraphStore:
         )
 
         return names, rows, elapsed_ms
+

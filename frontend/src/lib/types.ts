@@ -63,4 +63,41 @@ export interface GraphNode {
     saved: boolean;
     memory: SessionMemory;
   }
+
+  export interface TraceStep {
+    step: number;
+    node_id: string;
+    label: string;
+    relation_from_previous: string | null;
+    properties: Record<string, unknown>;
+  }
+
+  export interface ToolLogEntry {
+    agent: string;
+    tool: string;
+    status: string;
+    mode: string;
+  }
+
+  export interface AgentStatus {
+    name: string;
+    status: string;
+    detail: string;
+  }
+
+  export interface OrchestrationResponse {
+    answer: string;
+    trace_path: TraceStep[];
+    visited_nodes: string[];
+    memory_updated: boolean;
+    incident_id: string;
+    session_id: string;
+    query: string;
+    mcp_mode: string;
+    root_cause_analysis: string;
+    raw_graph_path: Record<string, unknown>;
+    previous_memory: Array<Record<string, unknown>>;
+    tool_log: ToolLogEntry[];
+    agents: AgentStatus[];
+  }
   

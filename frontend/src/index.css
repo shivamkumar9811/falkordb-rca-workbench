@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -38,6 +40,7 @@
     @apply bg-background text-foreground;
     margin: 0;
     min-width: 320px;
+    font-family: 'Inter', sans-serif;
   }
 
   button,
@@ -51,6 +54,80 @@
       color 160ms ease,
       transform 160ms ease,
       box-shadow 160ms ease;
+  }
+}
+
+.font-heading {
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.console-card {
+  @apply overflow-hidden border-white/[0.08] bg-[#161d2f] shadow-[0_18px_50px_rgba(0,0,0,0.18)];
+}
+
+.console-kicker {
+  @apply font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500;
+}
+
+.tactical-grid {
+  background-image: linear-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom right, black, transparent 78%);
+}
+
+.agent-row {
+  @apply flex items-center gap-3 rounded border border-white/[0.06] bg-[#111622] p-3;
+  transition: border-color 160ms ease, transform 160ms ease, background-color 160ms ease;
+}
+
+.agent-row:hover,
+.agent-row-active {
+  @apply -translate-y-0.5 border-cyan-400/30 bg-[#172238];
+}
+
+.agent-row-active {
+  box-shadow: 0 0 24px rgba(0, 229, 255, 0.08);
+}
+
+.trace-node {
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.trace-node:hover {
+  @apply -translate-y-0.5 border-cyan-300/60;
+  box-shadow: 0 8px 24px rgba(0, 229, 255, 0.1);
+}
+
+.preset-chip {
+  @apply border border-white/10 bg-white/[0.03] px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-wider text-slate-500;
+  transition: transform 160ms ease, border-color 160ms ease, color 160ms ease, background-color 160ms ease;
+}
+
+.preset-chip:hover {
+  @apply -translate-y-0.5 border-cyan-400/40 bg-cyan-400/[0.06] text-cyan-200;
+}
+
+.empty-state {
+  @apply flex flex-col items-center justify-center gap-2 rounded border border-dashed border-white/10 py-12 text-center font-mono text-[10px] text-slate-600;
+}
+
+.status-good {
+  @apply font-mono text-[10px] uppercase tracking-wider text-emerald-300;
+}
+
+.status-muted {
+  @apply font-mono text-[10px] uppercase tracking-wider text-amber-300;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }
 
