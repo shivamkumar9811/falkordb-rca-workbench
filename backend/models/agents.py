@@ -4,9 +4,27 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
+from models.graph import GraphSnapshot
+
 
 class OrchestrationRequest(BaseModel):
     query: str = Field(min_length=1, max_length=2400)
+    incident_id: str = Field(
+        default="INC-8821",
+        min_length=1,
+        max_length=120,
+        pattern=r"^[A-Za-z0-9_-]+$",
+    )
+    session_id: str = Field(
+        default="sess_rca_8821",
+        min_length=1,
+        max_length=120,
+        pattern=r"^[A-Za-z0-9_-]+$",
+    )
+
+
+class InvestigateRequest(BaseModel):
+    prompt: str = Field(min_length=1, max_length=2400)
     incident_id: str = Field(
         default="INC-8821",
         min_length=1,
@@ -56,4 +74,8 @@ class OrchestrationResponse(BaseModel):
     previous_memory: list[dict[str, Any]] = Field(default_factory=list)
     tool_log: list[ToolLogEntry] = Field(default_factory=list)
     agents: list[AgentStatus] = Field(default_factory=list)
+
+
+class InvestigationResponse(OrchestrationResponse):
+    graph: GraphSnapshot
     

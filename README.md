@@ -1,4 +1,4 @@
-# Falkor / Orchestra
+# FalkorMind
 
 Graph-driven incident investigation console connecting the React workspace to the existing FastAPI multi-agent orchestrator and FalkorDB adapter.
 

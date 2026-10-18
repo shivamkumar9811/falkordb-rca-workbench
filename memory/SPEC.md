@@ -1,4 +1,4 @@
-# Falkor / Orchestra
+# FalkorMind
 
 ## Purpose
 

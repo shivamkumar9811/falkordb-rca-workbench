@@ -149,7 +149,7 @@ export default function Orchestrator() {
               className="font-heading text-base font-extrabold uppercase tracking-[0.14em] text-slate-100"
               data-testid="brand-name"
             >
-              Falkor / Orchestra
+              FalkorMind
             </p>
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-slate-500">
               graph-driven agent console

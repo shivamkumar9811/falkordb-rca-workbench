@@ -11,15 +11,12 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    port: 3000,
-    allowedHosts: [
-      '.preview.emergentagent.com',
-      '.preview.emergentcf.cloud',
-      'localhost',
-      '127.0.0.1',
-    ],
+    port: 5173,
     proxy: {
-      '/api': 'http://localhost:8001',
+      '/api': {
+        target: 'http://127.0.0.1:8001',
+        changeOrigin: true,
+      },
     },
   },
 });
