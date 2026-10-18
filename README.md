@@ -11,7 +11,7 @@
 
 ---
 
-![FalkorMind Dashboard](https://raw.githubusercontent.com/shivamkumar9811/falkordb-rca-workbench/main/frontend/public/dashboard-preview.png) *(Add your screenshot here)*
+![FalkorMind Dashboard](https://raw.githubusercontent.com/shivamkumar9811/falkordb-rca-workbench/main/frontend/public/dashboard-preview.png)
 
 ---
 
