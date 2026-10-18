@@ -42,6 +42,17 @@ function errorMessage(error: unknown): string {
     : "Orchestration request failed";
 }
 
+function isMockMode(result: InvestigationResponse | undefined, connected: boolean): boolean {
+  if (result?.mcp_mode === "mock") return true;
+  if (result?.mcp_mode && result.mcp_mode !== "mock") return false;
+  return !connected;
+}
+
+function focusGraphNode(id: string) {
+  const win = window as unknown as { __cyFocusNode?: (id: string) => void };
+  win.__cyFocusNode?.(id);
+}
+
 function modeLabel(mode?: string, connected?: boolean): string {
   if (mode === "mock") return "MOCK FALLBACK";
   if (mode === "mcp") return "MCP LIVE";
@@ -114,6 +125,16 @@ export default function Orchestrator() {
   }, [graphQuery.data, result]);
 
   const rootCauseId = result?.trace_path[0]?.node_id;
+  const mockMode = isMockMode(result, connected);
+  const failedAgents = result?.tool_log
+    ? Array.from(
+        new Set(
+          result.tool_log
+            .filter((entry) => entry.status === "failed")
+            .map((entry) => entry.agent),
+        ),
+      )
+    : [];
 
   const run = () => {
     if (!query.trim()) {
@@ -135,7 +156,7 @@ export default function Orchestrator() {
       data-testid="agent-dashboard"
     >
       <header
-        className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] bg-[#0a0d14]/90 px-5 py-3 backdrop-blur-xl"
+        className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 bg-slate-900/80 px-5 py-3 shadow-2xl backdrop-blur-md"
         data-testid="dashboard-header"
       >
         <div className="flex items-center gap-3" data-testid="brand-lockup">
@@ -168,10 +189,24 @@ export default function Orchestrator() {
 
           <Badge
             className={
-              connected
-                ? "border border-emerald-400/30 bg-emerald-400/10 font-mono text-[9px] tracking-[0.12em] text-emerald-300"
-                : "border border-amber-400/30 bg-amber-400/10 font-mono text-[9px] tracking-[0.12em] text-amber-300"
+              mockMode
+                ? "border border-amber-500/30 bg-amber-950/80 font-mono text-[9px] tracking-[0.12em] text-amber-300"
+                : "border border-emerald-500/30 bg-emerald-950/80 font-mono text-[9px] tracking-[0.12em] text-emerald-300"
             }
+            data-testid="backend-mode-badge"
+          >
+            <span className="mr-1.5 inline-flex size-1.5">
+              {mockMode ? (
+                <span className="inline-flex size-1.5 rounded-full bg-amber-400" />
+              ) : (
+                <span className="inline-flex size-1.5 animate-pulse rounded-full bg-emerald-400" />
+              )}
+            </span>
+            FALKORDB: {mockMode ? "MOCK MODE" : "LIVE"}
+          </Badge>
+
+          <Badge
+            className="border border-white/10 bg-white/[0.03] font-mono text-[9px] tracking-[0.12em] text-slate-400"
             data-testid="connection-mode-badge"
           >
             <Activity size={10} className="mr-1.5" />
@@ -187,7 +222,7 @@ export default function Orchestrator() {
           data-testid="agent-workspace-panel"
         >
           <div
-            className="shrink-0 rounded-xl border border-white/[0.08] bg-[#111622] p-4"
+            className="shrink-0 rounded-xl border border-slate-800/80 bg-slate-900/80 p-4 shadow-2xl backdrop-blur-md transition-all hover:border-slate-700/80"
             data-testid="chat-input-card"
           >
             <label
@@ -287,11 +322,14 @@ export default function Orchestrator() {
             total={replay.events.length}
             isStreaming={replay.isStreaming}
             activeAgent={replay.activeAgent}
+            failedAgents={failedAgents}
             onSkip={replay.skip}
             pending={orchestration.isPending}
           />
 
-          {result && replay.isComplete && <AnswerCard result={result} />}
+          {result && replay.isComplete && (
+            <AnswerCard result={result} onVisitNode={focusGraphNode} />
+          )}
         </section>
 
         {/* Right — Live Graph Canvas (60%) */}

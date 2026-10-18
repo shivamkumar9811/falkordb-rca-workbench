@@ -46,10 +46,10 @@ export default function NodeDetailsDrawer({
 
   return (
     <aside
-      className="node-drawer absolute bottom-0 right-0 top-0 z-20 flex w-full max-w-[320px] flex-col border-l border-white/[0.08] bg-[#0a0e17]/95 backdrop-blur-xl"
+      className="node-drawer absolute bottom-0 right-0 top-0 z-20 flex w-full max-w-[320px] flex-col border-l border-slate-800/80 bg-slate-900/80 shadow-2xl backdrop-blur-md"
       data-testid="node-details-drawer"
     >
-      <header className="flex items-start justify-between gap-3 border-b border-white/[0.08] px-4 py-3">
+      <header className="flex items-start justify-between gap-3 border-b border-slate-800/80 px-4 py-3">
         <div className="flex min-w-0 items-center gap-2.5">
           <div
             className="flex size-9 shrink-0 items-center justify-center rounded border"
@@ -113,7 +113,7 @@ export default function NodeDetailsDrawer({
             {entries.map(([key, value]) => (
               <div
                 key={key}
-                className="rounded border border-white/[0.06] bg-[#111622] px-2.5 py-2"
+                className="rounded border border-slate-800/80 bg-slate-900/80 px-2.5 py-2 transition-all hover:border-slate-700/80"
                 data-testid={`drawer-property-${key}`}
               >
                 <dt className="font-mono text-[9px] uppercase tracking-[0.14em] text-slate-600">

@@ -51,9 +51,10 @@ function recommendations(
 
 interface AnswerCardProps {
   result: OrchestrationResponse;
+  onVisitNode?: (nodeId: string) => void;
 }
 
-export default function AnswerCard({ result }: AnswerCardProps) {
+export default function AnswerCard({ result, onVisitNode }: AnswerCardProps) {
   const [copied, setCopied] = useState(false);
 
   const copyJson = async () => {
@@ -67,7 +68,7 @@ export default function AnswerCard({ result }: AnswerCardProps) {
 
   return (
     <section
-      className="answer-card shrink-0 overflow-hidden rounded-xl border border-cyan-400/25 bg-[#111a26]"
+      className="answer-card shrink-0 overflow-hidden rounded-xl border border-slate-800/80 bg-slate-900/80 shadow-2xl backdrop-blur-md transition-all hover:border-slate-700/80"
       data-testid="final-answer-card"
     >
       <header className="flex items-center justify-between gap-2 border-b border-cyan-400/15 bg-cyan-400/[0.05] px-4 py-2.5">
@@ -196,6 +197,30 @@ export default function AnswerCard({ result }: AnswerCardProps) {
             </p>
           </div>
         </div>
+
+        {result.visited_nodes.length > 0 && (
+          <div className="border-t border-white/[0.07] pt-3">
+            <p className="mb-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-slate-600">
+              Visited graph nodes · click to locate
+            </p>
+            <div
+              className="flex flex-wrap gap-1.5"
+              data-testid="answer-visited-chips"
+            >
+              {result.visited_nodes.map((id) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => onVisitNode?.(id)}
+                  className="cursor-pointer rounded-md border border-slate-700 bg-slate-800 px-2 py-1 font-mono text-[11px] text-slate-200 transition-all hover:-translate-y-0.5 hover:border-cyan-400/50 hover:bg-slate-700 hover:text-cyan-200"
+                  data-testid={`answer-visited-chip-${id}`}
+                >
+                  {id}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

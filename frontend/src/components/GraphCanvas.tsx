@@ -191,6 +191,19 @@ export default function GraphCanvas({
             "border-color": "#EF4444",
             "background-color": "#450a0a",
             color: "#FCA5A5",
+            "border-width": 4,
+            width: 56,
+            height: 56,
+            "underlay-color": "#ef4444",
+            "underlay-padding": 10,
+            "underlay-opacity": 0.55,
+          },
+        },
+        {
+          selector: "node.root-pulse",
+          style: {
+            "underlay-opacity": 0.15,
+            "underlay-padding": 16,
           },
         },
         {
@@ -217,12 +230,27 @@ export default function GraphCanvas({
 
     // Canvas has no DOM nodes to target, so expose the core for
     // automated checks that need a node's rendered position.
-    (window as unknown as { __cy?: Core }).__cy = cy;
+    const win = window as unknown as {
+      __cy?: Core;
+      __cyFocusNode?: (id: string) => void;
+    };
+    win.__cy = cy;
+    win.__cyFocusNode = (id: string) => {
+      const target = cy.getElementById(id);
+      if (!target || target.empty()) return;
+      cy.animate(
+        { center: { eles: target }, zoom: 1.5, duration: 500 } as any,
+        { duration: 500 } as any,
+      );
+      target.removeClass("faded").addClass("picked");
+      window.setTimeout(() => target.removeClass("picked"), 900);
+    };
 
     return () => {
       cy.destroy();
       cyRef.current = null;
-      delete (window as unknown as { __cy?: Core }).__cy;
+      delete win.__cy;
+      delete win.__cyFocusNode;
     };
   }, []);
 
@@ -326,6 +354,24 @@ export default function GraphCanvas({
     ready,
   ]);
 
+  // Pulse the root-cause node's red underlay so it reads as an active alarm.
+  useEffect(() => {
+    if (!ready || !rootCauseId) return;
+    const cy = cyRef.current;
+    if (!cy) return;
+    const node = cy.getElementById(rootCauseId);
+    if (node.empty()) return;
+
+    let on = false;
+    const interval = window.setInterval(() => {
+      on = !on;
+      if (on) node.addClass("root-pulse");
+      else node.removeClass("root-pulse");
+    }, 650);
+
+    return () => window.clearInterval(interval);
+  }, [rootCauseId, ready]);
+
   const zoomBy = (factor: number) => {
     const cy = cyRef.current;
     if (!cy) return;
@@ -363,7 +409,7 @@ export default function GraphCanvas({
 
   return (
     <div
-      className="relative min-h-0 flex-1 overflow-hidden rounded-xl border border-white/[0.08] bg-[#080c14]"
+      className="relative min-h-0 flex-1 overflow-hidden rounded-xl border border-slate-800/80 bg-[#080c14]/90 shadow-2xl backdrop-blur-md"
       data-testid="graph-canvas-container"
     >
       <div className="graph-grid pointer-events-none absolute inset-0" />
