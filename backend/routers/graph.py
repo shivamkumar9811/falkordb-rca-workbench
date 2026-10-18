@@ -210,6 +210,28 @@ async def get_graph(request: Request) -> GraphSnapshot:
         raise http_error(exc) from exc
 
 
+@router.get("/graph/full", response_model=GraphSnapshot)
+async def get_full_graph(request: Request) -> GraphSnapshot:
+    """Return the complete current graph for the initial Cytoscape render."""
+    try:
+        node_rows = await store(request).rows("MATCH (n) RETURN n")
+        edge_rows = await store(request).rows(
+            "MATCH (a)-[r]->(b) RETURN a, r, b"
+        )
+
+        return GraphSnapshot(
+            nodes=[as_node(row) for row in node_rows],
+            edges=[as_edge(row) for row in edge_rows],
+        )
+
+    except Exception as exc:
+        logger.warning(
+            "FalkorDB full graph unavailable; returning an empty snapshot: %s",
+            exc,
+        )
+        return GraphSnapshot(nodes=[], edges=[])
+
+
 @router.get(
     "/incidents",
     response_model=list[IncidentRecord],
@@ -490,3 +512,4 @@ async def read_session_memory(
 
     except Exception as exc:
         raise http_error(exc) from exc
+    

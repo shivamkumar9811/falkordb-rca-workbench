@@ -23,7 +23,7 @@ import type {
   FalkorStatus,
   GraphNode,
   GraphSnapshot,
-  OrchestrationResponse,
+  InvestigationResponse,
 } from "@/lib/types";
 
 const DEFAULT_QUERY = "Why is Checkout Service failing?";
@@ -71,15 +71,15 @@ export default function Orchestrator() {
   // topology stands in so the canvas is never blank.
   const graphQuery = useQuery({
     queryKey: ["graph-snapshot"],
-    queryFn: () => apiGet<GraphSnapshot>("/graph"),
+    queryFn: () => apiGet<GraphSnapshot>("/graph/full"),
     retry: false,
     enabled: connected,
   });
 
   const orchestration = useMutation({
     mutationFn: () =>
-      apiPost<OrchestrationResponse>("/orchestrate", {
-        query,
+      apiPost<InvestigationResponse>("/investigate", {
+        prompt: query,
         incident_id: incidentId,
         session_id: sessionId,
       }),
@@ -98,6 +98,12 @@ export default function Orchestrator() {
   const replay = useAgentReplay(result);
 
   const snapshot = useMemo<GraphSnapshot>(() => {
+    const responseGraph = result?.graph;
+
+    if (responseGraph && responseGraph.nodes.length) {
+      return responseGraph;
+    }
+
     const live = graphQuery.data;
 
     if (live && live.nodes.length) {
@@ -105,7 +111,7 @@ export default function Orchestrator() {
     }
 
     return FALLBACK_GRAPH;
-  }, [graphQuery.data]);
+  }, [graphQuery.data, result]);
 
   const rootCauseId = result?.trace_path[0]?.node_id;
 

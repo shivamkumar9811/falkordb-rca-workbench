@@ -2,12 +2,13 @@
 
 ## Purpose
 
-An incident command console that coordinates three deterministic agents over the existing FalkorDB MCP tool contract. Users submit a natural-language incident query plus an incident and session ID, then receive a verified graph trace, root-cause analysis, readable audit trail, and raw JSON.
+An incident command console that coordinates three deterministic agents over the existing FalkorDB MCP tool contract. Users submit a natural-language incident query plus an incident and session ID, then receive a verified graph trace, root-cause analysis, readable audit trail, Cytoscape-compatible graph snapshot, and raw JSON.
 
 ## Data model
 
 - `OrchestrationRequest`: `query`, `incident_id`, and `session_id`.
 - `OrchestrationResponse`: `answer`, `trace_path`, `visited_nodes`, `memory_updated`, `raw_graph_path`, `previous_memory`, `tool_log`, `agents`, and execution metadata.
+- `InvestigationResponse`: the orchestration response plus `graph.nodes` and `graph.edges` returned by `POST /api/investigate`.
 - FalkorDB graph nodes/edges and `SessionMemory` remain compatible with `backend/models/graph.py` and the existing seed scenario.
 
 ## Key flow
@@ -39,7 +40,7 @@ There is no login or role gate. MCP credentials, when used, are server-side envi
 
 ### Streaming model
 
-`/api/orchestrate` returns one complete JSON document, not a token stream. `src/lib/agentStream.ts`
+`/api/orchestrate` and `/api/investigate` return one complete JSON document, not a token stream. `src/lib/agentStream.ts`
 (`buildStreamEvents` + `useAgentReplay`) replays that response as a timed timeline (~620ms/step) derived strictly
 from `tool_log`, `agents`, `previous_memory` and `trace_path` — nothing is invented. Each `trace_path` hop reveals
 its node and incoming edge, so the canvas highlights the traversal progressively: amber `.visited`, red `.active`
@@ -47,7 +48,7 @@ for the current hop, and non-path elements faded. `prefers-reduced-motion` rende
 
 ### Graph data source
 
-The canvas prefers `/api/graph`, which only answers when FalkorDB is reachable. When it is not,
+The canvas prefers `/api/graph/full`, which returns the complete current FalkorDB topology. When it is not,
 `src/lib/fallbackGraph.ts` supplies a topology mirroring `seed.cypher` exactly, so the canvas is never blank and
 still matches the node IDs the deterministic mock adapter traverses.
 

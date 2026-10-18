@@ -100,4 +100,8 @@ export interface GraphNode {
     tool_log: ToolLogEntry[];
     agents: AgentStatus[];
   }
-  
+
+  export interface InvestigationResponse
+    extends OrchestrationResponse {
+    graph: GraphSnapshot;
+  }

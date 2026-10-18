@@ -1,113 +1,139 @@
 {
-  "project_name": "FalkorDB Multi-Agent Incident Orchestrator",
-  "archetype": "THE PERFORMANCE PRO / TACTICAL MINIMALISM (Command Center)",
-  "theme": "Dark Layered Tactical Console",
-  "typography": {
-    "headings": "Barlow Condensed, Outfit, or Space Mono (900/700 weight for tactical athletic/cyber feel)",
-    "body": "Inter or DM Sans with generous tracking and high contrast",
-    "monospace": "JetBrains Mono / Source Code Pro for JSON responses, Cypher queries, tool logs, trace paths, and memory states",
-    "font_pairings": [
-      {
-        "role": "Console Headers & Stat Labels",
-        "font": "Barlow Condensed",
-        "style": "uppercase tracking-[0.15em] font-extrabold text-slate-100"
-      },
-      {
-        "role": "Agent Status & Step Badges",
-        "font": "JetBrains Mono",
-        "style": "font-mono text-xs tracking-wider uppercase text-emerald-400"
-      },
-      {
-        "role": "Body & Narrative Audit Trail",
-        "font": "Inter",
-        "style": "font-sans text-sm leading-relaxed text-slate-300"
-      }
-    ]
-  },
+  "project_name": "FalkorDB Graph Agent Console",
+  "theme": "Dark SOC Obsidian Tactical",
+  "archetype": "THE PERFORMANCE PRO / CYBER INTELLIGENCE",
   "colors": {
-    "background_primary": "#0A0D14 (Deep Obsidian / Ink Black)",
-    "background_secondary": "#111622 (Slate Console Layer)",
-    "surface_cards": "#161D2F (Card Surface with 1px border #2A364F)",
-    "primary_accent": "#00E5FF (Cyan Neon Pulse for active state & graph highlights)",
-    "secondary_accent": "#10B981 (Emerald Green for Memory agent & validated paths)",
-    "warning_accent": "#F59E0B (Amber Gold for Investigator reasoning steps & initial hypotheses)",
-    "alert_accent": "#EF4444 (Crimson Red for root cause alerts & high severity incidents)",
-    "border_subtle": "rgba(255, 255, 255, 0.08)",
-    "border_highlight": "rgba(0, 229, 255, 0.3)",
-    "text_primary": "#F8FAFC",
-    "text_secondary": "#94A3B8",
-    "text_muted": "#64748B",
-    "forbidden_colors": ["#7351B7 (AI Purple)", "#1B93A4 (Teal Blob)", "#000000 (Pure pitch un-tinted black flat)"]
+    "background_base": "#0A0D14",
+    "surface_panel": "#111722",
+    "surface_panel_border": "#1F293D",
+    "surface_card": "#161F2E",
+    "text_primary": "#F3F4F6",
+    "text_secondary": "#9CA3AF",
+    "text_muted": "#6B7280",
+    "accent_primary": "#06B6D4",
+    "accent_primary_glow": "rgba(6, 182, 212, 0.25)",
+    "accent_success": "#10B981",
+    "accent_warning": "#F59E0B",
+    "accent_critical": "#EF4444",
+    "accent_agent_node": "#8B5CF6",
+    "graph_canvas_bg": "#07090E",
+    "graph_node_default": "#38BDF8",
+    "graph_node_visited": "#A855F7",
+    "graph_edge_default": "#334155",
+    "graph_edge_active": "#06B6D4"
+  },
+  "typography": {
+    "headings_font": "JetBrains Mono, Fira Code, monospace",
+    "body_font": "IBM Plex Sans, Inter, sans-serif",
+    "mono_font": "JetBrains Mono, monospace",
+    "scale": {
+      "h1": "text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight",
+      "h2": "text-xl sm:text-2xl font-semibold tracking-tight",
+      "h3": "text-lg font-medium",
+      "body": "text-sm sm:text-base leading-relaxed",
+      "small_label": "text-xs font-mono uppercase tracking-widest text-slate-400"
+    }
   },
   "layout_and_grids": {
-    "strategy": "High Density Tactical Bento Grid (Mode B for Multi-Agent Dashboard)",
-    "header": "Sticky Glassmorphic Tactical Command Bar with backdrop-blur-xl bg-[#0A0D14]/80, live agent state indicators, mock/real FalkorDB toggle, and quick incident presets",
-    "grid_structure": "grid-cols-1 lg:grid-cols-12 gap-6 p-6 md:p-8",
-    "sections": [
-      {
-        "name": "Incident Query Panel (Hero Input)",
-        "span": "col-span-12 lg:col-span-5",
-        "style": "Tactical dark card with subtle cyber grid texture, quick incident presets (e.g. 'Latency spike on auth-service', 'DB connection drop in us-east-1'), FalkorDB tool indicator, and submit action."
-      },
-      {
-        "name": "Sequential Multi-Agent Execution Pipeline",
-        "span": "col-span-12 lg:col-span-7",
-        "style": "Live 3-step sequence viewer (1. Memory Agent -> 2. Investigator Agent -> 3. Explainer Agent) with pulsing active states, Cypher query preview, and FalkorDB tool execution counters."
-      },
-      {
-        "name": "Multi-Hop Audit Trail & Graph Path Visualizer",
-        "span": "col-span-12 lg:col-span-8",
-        "style": "Interactive step-by-step audit trail visualizer mapping visited nodes, shortest paths (tool_find_shortest_path), tool_execute_cypher raw output, and Explainer step narrative."
-      },
-      {
-        "name": "Session Memory & Root Cause Summary",
-        "span": "col-span-12 lg:col-span-4",
-        "style": "Persistent session memory panel displaying tool_read_session_memory & tool_write_session_memory history, confidence score, and downloadable JSON report."
-      }
+    "container_padding": "p-4 sm:p-6 lg:p-8",
+    "gap_scale": "gap-4 sm:gap-6",
+    "dashboard_mode": "High Density Grid with Command Panel on Left/Top and Cytoscape Canvas as Hero Center",
+    "card_borders": "1px solid #1F293D",
+    "corner_radius": "rounded-lg"
+  },
+  "visual_enhancers": {
+    "glassmorphism": "backdrop-blur-xl bg-slate-900/80 border border-slate-800/80",
+    "tracing_beam": "glow-border-cyan subtle 1px animated highlight",
+    "card_hover": "hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)] transition-all duration-200"
+  },
+  "components_and_structure": {
+    "navigation_header": {
+      "component": "TopNavbar",
+      "location": "/app/frontend/src/components/TopNavbar.js",
+      "features": [
+        "System Status Indicator",
+        "Session ID Badge",
+        "Dark Theme Toggle",
+        "API Endpoint Health status"
+      ]
+    },
+    "command_panel": {
+      "component": "CommandPanel",
+      "location": "/app/frontend/src/pages/Orchestrator.js",
+      "features": [
+        "Prompt Input Area",
+        "Preset Prompts",
+        "Session ID Input",
+        "Investigate Action Button with Loading State"
+      ]
+    },
+    "graph_canvas": {
+      "component": "GraphCanvas",
+      "location": "/app/frontend/src/components/GraphCanvas.js",
+      "features": [
+        "Cytoscape.js canvas",
+        "Interactive Nodes and Edges",
+        "Node Click Details Drawer trigger",
+        "Zoom/Fit Controls",
+        "Visited Nodes Glow"
+      ]
+    },
+    "agent_trace_panel": {
+      "component": "AgentLogStream",
+      "location": "/app/frontend/src/components/AgentLogStream.js",
+      "features": [
+        "Realtime/Sequential Step Trace",
+        "Step status badges (Executing, Success, Failed)",
+        "Visited Cypher query previews"
+      ]
+    },
+    "answer_card": {
+      "component": "AnswerCard",
+      "location": "/app/frontend/src/components/AnswerCard.js",
+      "features": [
+        "Final synthesized reasoning output",
+        "Execution metrics (latency, nodes traversed)",
+        "Copy answer functionality"
+      ]
+    },
+    "node_details_drawer": {
+      "component": "NodeDetailsDrawer",
+      "location": "/app/frontend/src/components/NodeDetailsDrawer.js",
+      "features": [
+        "Side drawer for selected Cytoscape node properties",
+        "JSON tree viewer or property key-value table"
+      ]
+    }
+  },
+  "image_urls": {
+    "network_graph_bg": "https://images.unsplash.com/photo-1644088379091-d574269d422f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHwxfHxjeWJlciUyMHNlY3VyaXR5JTIwbmV0d29yayUyMGdyYXBoJTIwbm9kZXMlMjBkYXJrJTIwbW9kZXxlbnwwfHx8fDE3OTIyOTM1NDF8MA&ixlib=rb-4.1.0&q=85",
+    "cyber_tactical_keypad": "https://images.pexels.com/photos/37709121/pexels-photo-37709121.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "soc_analyst_avatar": "https://images.pexels.com/photos/5380594/pexels-photo-5380594.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+  },
+  "testing_attributes": {
+    "rule": "All interactive elements, input fields, navigation controls, graph elements, and text displays MUST have explicit data-testid attributes.",
+    "examples": [
+      "data-testid=\"investigate-prompt-input\"",
+      "data-testid=\"investigate-submit-button\"",
+      "data-testid=\"session-id-input\"",
+      "data-testid=\"graph-canvas-container\"",
+      "data-testid=\"agent-trace-step\"",
+      "data-testid=\"answer-card-content\"",
+      "data-testid=\"node-details-drawer\""
     ]
   },
-  "components_and_surfaces": {
-    "cards": "Layered slate cards with border-slate-800/80, subtle hover glow `hover:border-cyan-500/40`, inner subtle gradient highlights, and no muddy transparency",
-    "badge_status": "Monospace pill badges with glow drop-shadows (e.g., `bg-emerald-950/80 text-emerald-400 border border-emerald-500/30`)",
-    "buttons": "Tactical sharp or pill buttons with high-contrast text, clear active glow, and explicit hover states",
-    "json_viewer": "Syntax-highlighted code blocks with copy-to-clipboard, collapsible nodes, and raw/formatted toggle for `trace_path` and `memory_updated`",
-    "terminal_logs": "Live stream dark terminal effect showing tool calls to FalkorDB (`tool_execute_cypher`, `tool_find_shortest_path`, `tool_read_session_memory`, `tool_write_session_memory`)"
-  },
-  "motion_and_interactions": {
-    "agent_transitions": "Staggered Framer Motion slide-in and pulse glow for active agent execution steps",
-    "graph_traversal": "Animated line tracer connecting path nodes (Node A -> Edge -> Node B) as the Investigator Agent traverses graph hops",
-    "hover_states": "Micro-lifts (`-translate-y-0.5`), glowing borders (`border-cyan-500/50`), and crisp sound/visual cues",
-    "reduced_motion": "Respect `prefers-reduced-motion` with instant state changes fallback"
-  },
-  "image_urls": [
-    {
-      "category": "Hero Background / Network Topology Overlay",
-      "url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODd8MHwxfHNlYXJjaHwxfHxjeWJlciUyMHNlY3VyaXR5JTIwc2VydmVyJTIwbmV0d29yayUyMG1vbml0b3JpbmclMjBjb25zb2xlJTIwZGFya3xlbnwwfHx8fDE3OTIxMzU2NDJ8MA&ixlib=rb-4.1.0&q=85",
-      "description": "Server rack glowing lights for subtle dark header background layer with overlay opacity bg-black/80"
-    },
-    {
-      "category": "Graph Node & Security Monitor Context",
-      "url": "https://images.pexels.com/photos/5380618/pexels-photo-5380618.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      "description": "Dark green tech monitoring display for incident investigation panel banner"
-    }
-  ],
-  "accessibility_and_testing": {
-    "testing_attributes": "All interactive elements (buttons, inputs, agent status badges, json tabs, preset chips) MUST include `data-testid` attributes (e.g., `data-testid=\"incident-query-input\"`, `data-testid=\"submit-query-button\"`, `data-testid=\"agent-status-memory\"`, `data-testid=\"audit-trail-container\"`)",
-    "apca_contrast": "Ensure 4.5:1 minimum text contrast over dark slate surfaces. Text on hover must explicitly set color (`hover:text-white hover:bg-slate-800`).",
-    "focus_states": "Focus visible ring (`focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950`)"
-  },
   "instructions_to_main_agent": [
-    "Build the incident orchestration system frontend and backend in strict alignment with this design specification.",
-    "Ensure 3 distinct agent displays: Memory Agent (read/write session memory), Investigator Agent (Cypher & shortest path reasoning), Explainer Agent (natural language step-by-step audit trail).",
-    "Provide a realistic deterministic mock fallback toggle if FalkorDB MCP server endpoint is offline or unavailable.",
-    "Ensure JSON response containing answer, trace_path, visited_nodes, and memory_updated is cleanly displayed alongside the human-readable visual audit trail.",
-    "Ensure every key interactive element includes a descriptive `data-testid` attribute for automated verification.",
-    "Do NOT use generic light theme or default Vercel white card styles. Maintain dark layered tactical command center theme throughout."
+    "Ensure Javascript / React components follow clean modular patterns without JSX typing errors.",
+    "Support both full JSON response render and modular trace streaming structures.",
+    "Maintain high-contrast APCA accessibility for dark theme background and cyan accents.",
+    "Ensure Cytoscape canvas resizes cleanly with window resize events.",
+    "Always apply data-testid to every interactive component and metric display."
   ],
-  "UNIVERSAL GUIDELINES FOR MAIN AGENT": {
-    "anti_slop": "Avoid standard blue gradients or centered light cards. Use high-density tactical dark command center styling.",
-    "test_id_requirement": "All buttons, inputs, links, agent badges, tabs, and interactive containers MUST have data-testid attributes.",
-    "contrast_rule": "Never rely on text color inheritance for hover states. Always specify hover:text-* explicitly.",
-    "glassmorphism": "Use backdrop-blur-xl with high contrast dark border (border-white/10 or border-cyan-500/20)."
-  }
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "Avoid generic AI slop centered layouts; build dense, tactical command workstation panels.",
+    "Layer cards with crisp 1px borders and subtle cyan/purple glows.",
+    "Never use generic AI emojis like 🤖 or 🧠; use Lucide-react or Radix icons.",
+    "Every button and input must have smooth micro-interactions (hover, focus ring, active scale).",
+    "Keep code modular and ensure backend FastAPI endpoints align with backend/server.py."
+  ]
 }
