@@ -1,10 +1,3 @@
-Yeh rahi aapke GitHub repository (`falkordb-rca-workbench`) ke liye ek **professional, production-grade, aur Hackathon-Winning `README.md` file**.
-
-Aap ise directly copy karke apne project ki **`README.md`** file mein paste kar sakte hain.
-
----
-
-```markdown
 # 🧠 FalkorMind — Graph-Driven Multi-Agent RCA Console
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
