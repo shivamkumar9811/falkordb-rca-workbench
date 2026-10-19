@@ -101,4 +101,15 @@ async def unhandled_handler(
     )
 
 
+@app.get("/")
+@app.head("/")
+async def root() -> dict[str, str]:
+    return {
+        "service": "falkordb-rca-workbench",
+        "status": "ok",
+        "health": "/api/status",
+        "docs": "/docs",
+    }
+
+
 app.include_router(api_router)
