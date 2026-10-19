@@ -138,7 +138,7 @@ async def get_status(request: Request) -> FalkorStatus:
         )
 
     except Exception as exc:
-        logger.exception("FalkorDB status check failed: %s", exc)
+        logger.warning("FalkorDB status check failed: %s", exc)
         return FalkorStatus(
             connected=False,
             graph_name=graph.graph_name,

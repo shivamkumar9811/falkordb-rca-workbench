@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://falkordb-rca-workbench.onrender.com/api/:path*"
+    }
+  ]
+}
